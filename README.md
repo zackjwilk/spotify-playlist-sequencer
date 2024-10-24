@@ -16,4 +16,4 @@ Install dependencies with pip:
 
 Edit .env and replace your_client_id and your_client_secret with your own Spotify application Client ID and Client Secret.
 
-Run playlist_sequencer.py, enter the provided URL, copy the text after "code=" in the new URL, and enter it back into the terminal!
+Run playlist_sequencer.py, provide authorization with your Spotify credentials, and enter your Spotify username and the name of your desired playlist!

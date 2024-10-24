@@ -277,7 +277,6 @@ if playlist:
                     print("Invalid sequence basis")
 
     # Apply selected sort method to IDs and URIs of tracks
-    sorted
     if sequence_mode == "symmetrical":
         sorted_stuff = symmetric_sort(values, track_ids, track_uris)
         print(f"Track IDs and URIs sequenced symetrically by {sequence_basis} successfully")

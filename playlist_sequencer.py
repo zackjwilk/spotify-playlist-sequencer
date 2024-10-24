@@ -1,9 +1,9 @@
 # EDIT THESE
-sequence_basis = "valence"
+sequence_basis = "energy"
 # ^ Spotify audio feature (energy, danceability, valence, tempo, loudness,
 # key, acousticness, instrumentalness, speechiness, liveness, time_signature,
 # duration_ms, mode)
-sequence_mode = "increasing"
+sequence_mode = "symmetrical"
 # ^ symmetrical, increasing, or decreasing
 
 import json

@@ -1,9 +1,9 @@
 # EDIT THESE
-sequence_basis = "energy"
+sequence_basis = "valence"
 # ^ Spotify audio feature (energy, danceability, valence, tempo, loudness,
 # key, acousticness, instrumentalness, speechiness, liveness, time_signature,
 # duration_ms, mode)
-sequence_mode = "symmetrical"
+sequence_mode = "increasing"
 # ^ symmetrical, increasing, or decreasing
 
 import json
@@ -11,6 +11,7 @@ import math
 import requests
 import os
 from dotenv import load_dotenv
+from playwright.sync_api import sync_playwright
 
 # Load environment variables from .env
 load_dotenv()
@@ -23,8 +24,15 @@ SCOPE = "playlist-read-private playlist-modify-private playlist-modify-public"
 
 # Get authorization
 auth_url = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&scope={SCOPE}"
-print(f"Go to the following URL to authorize the application:\n{auth_url}\n")
-auth_code = input("Enter the authorization code from the URL (after \"code=\"): ")
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    page = browser.new_page()
+
+    page.goto(auth_url)
+    page.wait_for_url(f"{REDIRECT_URI}*")
+    auth_code = page.url.split("code=")[-1]
+    
+    browser.close()
 
 token_url = "https://accounts.spotify.com/api/token"
 

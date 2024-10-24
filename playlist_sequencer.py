@@ -230,6 +230,15 @@ def increasing_sort(lst, ids, uris):
     
     return [ids, uris]
 
+def get_values(playlist_id):
+    string = ""
+    tracks_info = get_playlist_tracks(playlist_id)
+    for item in tracks_info:
+        track = item["track"]
+        value = get_audio_features([track["id"]])[0][sequence_basis]
+        string += track["name"] + " - " + str(value) + "\n"
+    return string
+
 playlists_info = get_user_playlists()
 
 playlist = None
@@ -246,6 +255,8 @@ if playlist:
     tracks_info = get_playlist_tracks(playlist_id)
     track_ids = []
     track_uris = []
+
+    before_and_after = [get_values(playlist_id)]
 
     # Create lists of IDs and URIs of each track in playlist
     for item in tracks_info:
@@ -287,6 +298,8 @@ if playlist:
     # Create new playlist and add tracks in new sorted sequence
     new_playlist_id = create_playlist(playlist_name)
     add_tracks(new_playlist_id, sorted_uris)
+    before_and_after.append(get_values(new_playlist_id))
     print("Done")
+    print(f"\nBefore:\n{before_and_after[0]}\nAfter:\n{before_and_after[1]}")
 else:
     print("Playlist not found")
